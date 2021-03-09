@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)https://gfinder-1217.web.app/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="https://gfinder-1217.web.app/img/favicon.ico">
+  <title>Play</title>
+  <script type="text/javascript" src="./jquery.js.download"></script>
+  <script type="text/javascript" src="./sprite.js.download"></script>
+  <script src="./jquery-ui.min.js.download"></script>
+  <script src="./jquery.ui.touch-punch.min.js.download"></script>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      width: 880px;
+      height: 400px;
+      margin: 0 auto;
+      background-image: url("img/bg.jpg");
+      background-size: 880px 400px;
+      position: relative;
+      display: none;
+    }
+
+    #loading {
+      width: 880px;
+      height: 400px;
+      margin: 0 auto;
+      background-image: url("img/loadingBg.png");
+      position: relative;
+    }
+
+    #progress {
+      width: 680px;
+      height: 20px;
+      top: 300px;
+      left: 100px;
+      position: absolute;
+    }
+
+    #bar {
+      width: 0%;
+      height: 20px;
+      background-color: red;
+      border-radius: 50px;
+    }
+
+    #mainAvatar {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      top: 10px;
+      left: 5px;
+      background-image: url("img/mainHead.png");
+      background-size: 60px;
+      border-radius: 30px;
+      z-index: 1;
+    }
+
+    #mainIndex {
+      width: 160px;
+      position: absolute;
+      top: 5px;
+      left: 70px;
+      z-index: 1;
+    }
+
+    #power {
+      font-size: 14px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .indexValue {
+      width: 80px;
+      float: left;
+      font-size: 12px;
+    }
+
+    #levelProgress {
+      width: 160px;
+      height: 5px;
+      background-color: gray;
+      bottom: -5px;
+      position: absolute;
+      z-index: 1;
+    }
+
+    #levelBar {
+      width: 75%;
+      height: 5px;
+      background-color: blue;
+    }
+
+    .selectIcon:hover {
+      transform: scale(1.1);
+    }
+
+    #listApp {
+      width: auto;
+      height: 65px;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      z-index: 4;
+    }
+
+    .app {
+      width: 60px;
+      height: 60px;
+      float: right;
+      background-color: blue;
+      margin-right: 5px;
+      background: url("img/list.png") 0px 0px;
+    }
+
+    #app1 {
+      background-size: 326px 650px;
+      background-position: 0px -538px;
+    }
+
+    #app2 {
+      background-size: 325px 650px;
+      background-position: -65px -189px;
+    }
+
+    #app3 {
+      background-size: 316px 650px;
+      background-position: -0px -130px;
+    }
+
+    #app4 {
+      background-size: 316px 650px;
+      background-position: -62px -128px;
+    }
+
+    #chatBox {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 4;
+    }
+
+    #btnHideChat {
+      
+    }
+
+    #btnShowChat {
+      display: none;
+    }
+
+    #chat {
+      width: 225px;
+      height: 150px;
+      margin-bottom: 50px;
+      overflow-y: scroll;
+      direction: rtl;
+    }
+
+    #chatValue {
+      padding-left: 5px;
+      color: white;
+      direction: ltr;
+    }
+
+    #chatInput {
+      position: absolute;
+      bottom: 0px;
+      z-index: 4;
+    }
+
+    #txtTo {
+      display: none;
+    }
+
+    #listMission {
+      width: 150px;
+      height: 120px;
+      position: absolute;
+      right: 0px;
+      top: 130px;
+      z-index: 4;
+      overflow-y: scroll;
+    }
+
+    #btnHideMission {
+      position: absolute;
+      right: 150px;
+      top: 130px;
+      z-index: 4;
+    }
+
+    #btnShowMission {
+      position: absolute;
+      right: 0px;
+      top: 130px;
+      z-index: 4;
+      display: none;
+    }
+
+    #listMenu {
+      width: 160px;
+      height: 120px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      z-index: 1;
+    }
+
+    .menu {
+      position: absolute;
+      background: url("img/list.png") 0px 0px;
+    }
+
+    #menu0 {
+      width: 60px;
+      height: 60px;
+      top: 10px;
+      right: 50px;
+      background-size: 300px 600px;
+      background-position: -196px -0px;
+    }
+
+    #menu1 {
+      width: 40px;
+      height: 40px;
+      top: 5px;
+      right: 115px;
+      background-size: 208px 434px;
+      background-position: -160px -277px;
+    }
+
+    #menu2 {
+      width: 40px;
+      height: 40px;
+      top: 55px;
+      right: 110px;
+      background-size: 208px 434px;
+      background-position: -124px -82px;
+    }
+
+    #menu3 {
+      width: 40px;
+      height: 40px;
+      top: 75px;
+      right: 60px;
+      background-size: 212px 438px;
+      background-position: -0px -324px;
+    }
+
+    #menu4 {
+      width: 40px;
+      height: 40px;
+      top: 55px;
+      right: 15px;
+      background-size: 209px 434px;
+      background-position: -166px -120px;
+    }
+
+    #menu5 {
+      width: 40px;
+      height: 40px;
+      top: 5px;
+      right: 5px;
+      background-size: 209px 428px;
+      background-position: -0px -239px;
+    }
+
+    #nowEvent {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      right: 15px;
+      bottom: 75px;
+      z-index: 4;
+      background: url("img/list.png") 0px 0px;
+      background-size: 225px 535px;
+      background-position: -94px -48px;
+      animation-name: example;
+      animation: example 3s infinite;
+    }
+
+    @keyframes example {
+      from {opacity: 0.5;}
+      to {opacity: 1;}
+    }
+
+    #hideEvent {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 10px;
+      left: 250px;
+      z-index: 1;
+      background: url("img/list.png") 0px 0px;
+      background-size: 166px 332px;
+      background-position: -61px -269px;
+    }
+
+    #listEvent {
+      width: 385px;
+      height: auto;
+      position: absolute;
+      top: 5px;
+      left: 285px;
+      z-index: 1;
+    }
+
+    .event {
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+      margin-top: 2px;
+      float: left;
+      background: url("img/list.png") 0px 0px;
+    }
+
+    #event1 {
+      width: 46px;
+      height: 46px;
+      background-size: 246px 480px;
+      background-position: -56px -0px;
+      border: 2px solid transparent;
+    }
+
+    #event2 {
+      width: 46px;
+      height: 46px;
+      background-size: 250px 520px;
+      background-position: -100px -95px;
+      border: 2px solid transparent;
+    }
+
+    #event3 {
+      width: 46px;
+      height: 46px;
+      background-size: 246px 510px;
+      background-position: -0px -54px;
+      border: 2px solid;
+      border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cstyle%3Epath%7Banimation:stroke 4s infinite linear%3B%7D%40keyframes stroke%7Bto%7Bstroke-dashoffset:776%3B%7D%7D%3C/style%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%232d3561' /%3E%3Cstop offset='25%25' stop-color='%23c05c7e' /%3E%3Cstop offset='50%25' stop-color='%23f3826f' /%3E%3Cstop offset='100%25' stop-color='%23ffb961' /%3E%3C/linearGradient%3E %3Cpath d='M1.5 1.5 l97 0l0 97l-97 0 l0 -97' stroke-linecap='square' stroke='url(%23g)' stroke-width='3' stroke-dasharray='388'/%3E %3C/svg%3E") 1;
+    }
+
+    #mainAreaBg {
+      width: 880px;
+      height: 150px;
+      position: absolute;
+      background-image: url("img/area.png");
+      background-repeat: repeat-x;
+      bottom: 0px;
+    }
+
+    #mainArea {
+      width: 840px;
+      height: 100px;
+      position: absolute;
+      bottom: 5px;
+      left: 20px;
+      z-index: 3;
+    }
+
+    #main {
+      position: absolute;
+      z-index: 1;
+      transition-property: top, left;
+      transition-duration: 2s;
+      transform: scale(0.8);
+    }
+
+    #mainIdle {
+      width: 75px;
+      height: 109px;
+      background: url("img/mainIdle.png");
+      background-position: 0px -0px;
+      display: none;
+      transform: scale(0.8);
+    }
+
+    #mainRun {
+      width: 70px;
+      height: 94px;
+      background: url("img/mainRun.png");
+      background-position: 0px -214px;
+      display: none;
+      transform: scale(0.8);
+    }
+
+    #hole {
+      position : absolute;
+      right: 70px;
+      bottom: 70px;
+      width: 105px;
+      height: 60px;
+      background-size: 105px 60px;
+      background-image: url("img/fire.gif");
+    }
+
+    #hokageHouse {
+      position : absolute;
+      left: 350px;
+      bottom: 100px;
+      width: 160px;
+      height: 160px;
+      background-size: 160px;
+      background-image: url("img/hokageHouse.png");
+    }
+
+    #anbuHouse {
+      position : absolute;
+      left: 200px;
+      bottom: 100px;
+      width: 96px;
+      height: 96px;
+      background-size: 96px;
+      background-image: url("img/anbuHouse.png");
+    }
+
+    #capTL {
+      position : absolute;
+      right: 220px;
+      bottom: 100px;
+      width: 96px;
+      height: 96px;
+      background-size: 96px;
+      background-image: url("img/capTL.png");
+    }
+
+    #clickHere {
+      position : absolute;
+      width: 30px;
+      height: 30px;
+      background-size: 30px;
+      background-image: url("img/here.png");
+      left: 0px;
+      top: 0px;
+      display: none;
+      z-index: 1;
+    }
+
+    #enter {
+      position : absolute;
+      width: 50px;
+      height: 50px;
+      left: 415px;
+      bottom: 15px;
+      background-image: url("img/list.png");
+      background-size: 271px 542px;
+      background-position: -50px -362px;
+      z-index: 4;
+      display: none;
+    }
+
+    #question {
+      position : absolute;
+      width: 320px;
+      height: 160px;
+      left: 260px;
+      top: 120px;
+      background-color: white; 
+      padding: 20px;
+      border: solid 1px;
+      border-radius: 20px;
+      z-index: 4;
+      display: none;
+      text-align: center;
+    }
+
+    #panel1 {
+      width: 480px;
+      height: 260px;
+      left: 200px;
+      top: 70px;
+      background-image: url("img/panel1.png");
+      background-size: 100% 100%;
+    }
+
+    .panel {
+      position : absolute;
+      z-index: 5;
+      display: none;
+    }
+
+    .closePanel {
+      position : absolute;
+      width: 40px;
+      height: 40px;
+      right: -10px;
+      top: -10px;
+      border-radius: 20px;
+      z-index: 5;
+      background-image: url("img/close.png");
+      background-size: 40px;
+    }
+
+    #closePanelBagEquip {
+      position : absolute;
+      width: 40px;
+      height: 40px;
+      right: -10px;
+      top: -10px;
+      border-radius: 20px;
+      z-index: 5;
+      background-image: url("img/close.png");
+      background-size: 40px;
+    }
+
+    #panelNinja {
+      width: 480px;
+      height: 290px;
+      left: 200px;
+      top: 60px;
+      background-image: url("img/panel2.png");
+      background-size: 100% 100%;
+    }
+
+    .btnSwitch {
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    #ninjaContent {
+      width: 480px;
+      height: 255px;
+      margin-top: 5px;
+    }
+
+    #listNinja {
+      width: 120px;
+      height: 255px;
+      float: left;
+    }
+
+    .ninjaBox {
+      width: 50px;
+      height: 50px;
+      float: left;
+      margin-left: 5px;
+      background-image: url("img/box1.png");
+      background-size: 50px;
+    }
+
+    #ninjaDetail {
+      width: 240px;
+      height: 255px;
+      float: left;
+    }
+
+    #ninjaDetailTop {
+      width: 240px;
+      height: 200px;
+    }
+
+    #ninjaDetailLeft {
+      width: 60px;
+      height: 200px;
+      float: left;
+    }
+
+    #ninjaDetailMid {
+      width: 120px;
+      height: 200px;
+      float: left;
+    }
+
+    #ninjaDetailMidTop {
+      width: 120px;
+      height: 40px;
+    }
+
+    #ninjaDetailMidMid {
+      width: 120px;
+      height: 140px;
+      background-image: url("img/mainBody.png");
+      background-size: 100% 100%;
+    }
+
+    #ninjaDetailMidBottom {
+      width: 120px;
+      height: 40px;
+    }
+
+    #ninjaDetailRight {
+      width: 60px;
+      height: 200px;
+      float: left;
+    }
+
+    #ninjaDetailBottom {
+      width: 240px;
+      height: 55px;
+    }
+
+    .equipBox {
+      width: 50px;
+      height: 50px;
+      float: left;
+      margin-left: 5px;
+      background: url("img/box2.png") 0px 0px;
+      background-size: 100px 50px;
+      background-position: -96px -48px;
+    }
+
+    #ninjaDetailInfo {
+      width: 120px;
+      height: 255px;
+      float: left;
+    }
+
+    #ninjaTeam {
+      width: 360px;
+      height: 255px;
+      float: left;
+      display: none;
+    }
+
+    #ninjaTeamDetail {
+      width: 180px;
+      height: 180px;
+      top: 40px;
+      left: 80px;
+      position: relative;
+      background-image: url("img/ninjaTeamBg.png");
+      background-size: 180px;
+    }
+
+    .ninjaHead {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      display: block;
+      float: left;
+    }
+
+    .ninjaHeadTeam {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+    }
+
+    .teamSwap {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      z-index: 0;
+    }
+
+    .teamDrop {
+      width: 50px;
+      height: 50px;
+      background-image: url("img/box1.png");
+      background-size: 50px;
+    }
+
+    .ninjaTeam7 { left: 0; top: 0; }
+    .ninjaTeam4 { left: 60px; top: 0; }
+    .ninjaTeam1 { left: 120px; top: 0; }
+    .ninjaTeam8 { left: 0; top: 60px; }
+    .ninjaTeam5 { left: 60px; top: 60px; }
+    .ninjaTeam2 { left: 120px; top: 60px; }
+    .ninjaTeam9 { left: 0; top: 120px; }
+    .ninjaTeam6 { left: 60px; top: 120px; }
+    .ninjaTeam3 { left: 120px; top: 120px; }
+
+    #ninjaSummon {
+      width: 320px;
+      height: 210px;
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+      margin-left: 20px;
+      float: left;
+      overflow-y: scroll;
+      display: none;
+    }
+
+    #panelBag {
+      width: 500px;
+      height: 290px;
+      left: 190px;
+      top: 60px;
+      background-image: url("img/panel2.png");
+      background-size: 100% 100%;
+    }
+
+    #bagContent {
+      width: 500px;
+      height: 240px;
+      margin-top: 10px;
+    }
+
+    #panelBagEquip {
+      width: 400px;
+      height: 230px;
+      left: 240px;
+      top: 90px;
+      background-image: url("img/panel1.png");
+      background-size: 100% 100%;
+    }
+
+    #bagEquipContent {
+      width: 380px;
+      height: 180px;
+      margin: 10px;
+      overflow-y: scroll;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .item {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      float: left;
+      outline: solid 1px white;
+      position: relative;
+    }
+
+    .useEquip {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      float: left;
+    }
+
+    .usedEquip {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      pointer-events: none;
+    }
+
+    .itemImg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .itemNum {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      color: white;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    #btnUseItem {
+      position: absolute;
+      z-index: 2;
+      display: none;
+    }
+
+    #bag {
+      width: 480px;
+      height: 220px;
+      margin: 10px;
+      float: left;
+      background: rgba(0, 0, 0, 0.2);
+      overflow-y: scroll;
+    }
+
+    #shop {
+      width: 230px;
+      height: 220px;
+      margin: 10px;
+      float: left;
+      background: rgba(0, 0, 0, 0.2);
+      overflow-y: scroll;
+      display: none;
+    }
+
+    #warehouse {
+      width: 230px;
+      height: 220px;
+      margin: 10px;
+      float: left;
+      background: rgba(0, 0, 0, 0.2);
+      overflow-y: scroll;
+      display: none;
+    }
+
+    #panelUpgrade {
+      position : absolute;
+      width: 480px;
+      height: 290px;
+      left: 200px;
+      top: 60px;
+      z-index: 5;
+      background-image: url("img/panel2.png");
+      background-size: 100% 100%;
+      display: none;
+    }
+
+    #panelSmelting {
+      position : absolute;
+      width: 480px;
+      height: 290px;
+      left: 200px;
+      top: 60px;
+      z-index: 5;
+      background-image: url("img/panel2.png");
+      background-size: 100% 100%;
+      display: none;
+    }
+
+  </style>
+</head>
+<body onload="loading()">
+  <div id="loading" style="display: none;">
+    <div id="progress">
+      <div id="bar" style="width: 100%;"></div>
+    </div>
+  </div>
+  <div id="container" style="display: block;">
+    <div id="mainAvatar"></div>
+    <div id="mainIndex">
+      <div id="power">Power: 4,567,890</div>
+      <span class="indexValue">user</span>
+      <span class="indexValue">Vip: 10</span>
+      <span class="indexValue">Coin: 100 M</span>
+      <span class="indexValue">Gold: 5 M</span>
+      <span class="indexValue">Lv: 199</span>
+      <span class="indexValue">Enegry: 2,000</span>
+      <div id="levelProgress">
+        <div id="levelBar"></div>
+      </div>
+    </div>
+    <div id="listApp">
+      <div class="app selectIcon" id="app1"></div>
+      <div class="app selectIcon" id="app2"></div>
+      <div class="app selectIcon" id="app3"></div>
+      <div class="app selectIcon" id="app4"></div>
+    </div>
+    <div id="chatBox">
+      <button id="btnShowChat" style="display: inline-block;">∧</button>
+      <div id="chat" style="display: none;">
+        <div id="chatValue">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet facilis, laborum numquam optio totam nam, quos perspiciatis voluptatum ipsum reiciendis eaque vero repudiandae voluptatibus dolor tempore, officia, illum tempora porro! Lorem ipsum dolor sit amet consectetur adipisicing, elit. Qui debitis placeat sunt, repellat, odit doloribus. In ipsa, ducimus cupiditate illo exercitationem pariatur provident quos, unde corrupti dolore quas, praesentium officia!</div>
+      </div>
+    </div>
+    <div id="chatInput" style="display: none;">
+      <button id="btnHideChat">∨</button><button id="btnGm">GM</button><button id="btnAll">All</button><button id="btnTo">Pm</button><input id="txtTo" style="width: 85px; display: inline-block;" type="text" name="chatTo" placeholder="To:"><br>
+      <input style="width: 170px" type="text" name="chat"><button id="btnEnterChat">Enter</button>
+    </div>
+    <div id="listMenu">
+      <div class="menu selectIcon" id="menu0"></div>
+      <div class="menu selectIcon" id="menu1"></div>
+      <div class="menu selectIcon" id="menu2"></div>
+      <div class="menu selectIcon" id="menu3"></div>
+      <div class="menu selectIcon" id="menu4"></div>
+      <div class="menu selectIcon" id="menu5"></div>
+    </div>
+    <span id="btnHideMission"><a href="https://gfinder-1217.web.app/#">&gt;&gt;&nbsp;</a></span>
+    <span id="btnShowMission"><a href="https://gfinder-1217.web.app/#">&lt;&lt;&nbsp;</a></span>
+    <div id="listMission">
+      Mission 1: Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, cum. <a href="https://gfinder-1217.web.app/#">link</a>
+    </div>
+    <div id="nowEvent" class="selectIcon"></div>
+    <div id="hideEvent"></div>
+    <div id="listEvent">
+      <div class="event selectIcon" id="event1"></div>
+      <div class="event selectIcon" id="event2"></div>
+      <div class="event selectIcon" id="event3"></div>
+    </div>
+    <div id="mainAreaBg"></div>
+    <div id="mainArea" style=""></div>
+    <div id="hole"></div>
+    <div id="hokageHouse"></div>
+    <div id="anbuHouse"></div>
+    <div id="capTL"></div>
+    <div id="enter" class="selectIcon" style="display: none;"></div>
+    <div id="question" class="panel" style="display: none;">
+      <div id="closeQuestion" class="closePanel selectIcon"></div>
+      Mission 1: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident, velit ipsa id minus, molestias aspernatur. Error accusamus aliquid, rerum voluptates. <a href="https://gfinder-1217.web.app/#">link</a>
+    </div>
+    <div id="panel1" class="panel" style="display: none;">
+      <div id="closePanel1" class="closePanel selectIcon"></div>
+    </div>
+    <div id="panelNinja" class="panel" style="display: none;">
+      <div id="closePanelNinja" class="closePanel selectIcon"></div>
+      <button id="btnNinja" class="btnSwitch">Ninja</button>
+      <button id="btnTeam" class="btnSwitch">Team</button>
+      <button id="btnSummon" class="btnSwitch">Summon</button>
+      <div id="ninjaContent">
+        <div id="listNinja" class="ui-droppable">
+          <div id="ninja1" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="main" src="./mainHead.png"></div>
+          <div id="ninja2" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="sasuke" src="./sasukeHead.png"></div>
+          <div id="ninja3" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="sakura" src="./sakuraHead.png"></div>
+          <div id="ninja4" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="gaara" src="./gaaraHead.png"></div>
+          <div id="ninja5" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="rocklee" src="./rockleeHead.png"></div>
+          <div id="ninja6" class="ninjaBox ninjaSummon ui-droppable"><img class="ninjaHead ui-draggable ui-draggable-handle" name="naruto" src="./narutoHead.png"></div>
+          <div id="ninja7" class="ninjaBox ninjaSummon ui-droppable"></div>
+          <div id="ninja8" class="ninjaBox ninjaSummon ui-droppable"></div>
+          <div id="ninja9" class="ninjaBox ninjaSummon ui-droppable"></div>
+          <div id="ninja10" class="ninjaBox ninjaSummon ui-droppable"></div>
+        </div>
+        <div id="ninjaDetail">
+          <div id="ninjaDetailTop">
+            <div id="ninjaDetailLeft">
+              <div id="equipBox1" class="equipBox"></div>
+              <div id="equipBox2" class="equipBox"><div id="equip1" class="usedEquip"><img class="itemImg" src="./equip1.png"></div></div>
+              <div id="equipBox3" class="equipBox"><div id="equip3" class="usedEquip"><img class="itemImg" src="./equip3.png"></div></div>
+              <div id="equipBox4" class="equipBox"></div>
+            </div>
+            <div id="ninjaDetailMid">
+              <div id="ninjaDetailMidTop">
+                <span id="ninjaName">gaara</span> Lv:<span id="ninjaLevel">199</span><br>Develop:<span id="ninjaDevelop">19</span></div>
+              <div id="ninjaDetailMidMid" style="background-image: url(&quot;img/gaaraBody.png&quot;);"></div>
+              <div id="ninjaDetailMidBottom"><span id="ninjaHp">Hp: 3,456,789</span></div>
+            </div>
+            <div id="ninjaDetailRight">
+              <div id="equipBox5" class="equipBox"></div>
+              <div id="equipBox6" class="equipBox"></div>
+              <div id="equipBox7" class="equipBox"></div>
+              <div id="equipBox8" class="equipBox"></div>
+            </div>
+          </div>
+          <div id="ninjaDetailBottom">
+            <div id="equipBox9" class="equipBox"></div>
+            <div id="equipBox10" class="equipBox"></div>
+            <div id="equipBox11" class="equipBox"></div>
+            <br>
+          </div>
+        </div>
+        <div id="ninjaDetailInfo">
+          <span id="ninjaIndex">
+          NA: 99,999<br>TA: 99,999<br>GA: 99,999<br>
+          ND: 55,555<br>TD: 55,555<br>GD: 55,555<br>
+          </span>
+          Skill: <a href="https://gfinder-1217.web.app/#"><span id="ninjaSkill">Lorem ipsum dolor, sit.</span></a><br>
+          Rage: <a href="https://gfinder-1217.web.app/#"><span id="ninjaRage">Lorem ipsum dolor sit.</span></a><br>
+          <button id="btnSwitchEquip" class="btnSwitch">Swinch Equip</button>
+        </div>
+        <div id="ninjaTeam">
+          <div id="ninjaTeamDetail">
+            <div id="ninjaTeam1" class="teamSwap ninjaTeam1 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"><img class="ninjaHeadTeam naruto" name="naruto" src="./narutoHead.png"></div>
+            </div>
+            <div id="ninjaTeam2" class="teamSwap ninjaTeam2 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam3" class="teamSwap ninjaTeam3 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam4" class="teamSwap ninjaTeam4 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam5" class="teamSwap ninjaTeam5 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"><img class="ninjaHeadTeam main" name="main" src="./mainHead.png"></div>
+            </div>
+            <div id="ninjaTeam6" class="teamSwap ninjaTeam6 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam7" class="teamSwap ninjaTeam7 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam8" class="teamSwap ninjaTeam8 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+            <div id="ninjaTeam9" class="teamSwap ninjaTeam9 ui-draggable ui-draggable-handle ui-droppable">
+              <div class="teamDrop ui-droppable"></div>
+            </div>
+          </div>
+        </div>
+        <div id="ninjaSummon" class="ninjaSummon ui-droppable">
+          <img class="ninjaHead ui-draggable ui-draggable-handle" name="hinata" src="./hinataHead.png">
+          <img class="ninjaHead ui-draggable ui-draggable-handle" name="neji" src="./nejiHead.png">
+        </div>
+      </div>
+    </div>
+    <div id="panelBag" class="panel" style="display: none;">
+      <div id="closePanelBag" class="closePanel selectIcon"></div>
+      <button id="btnShop" class="btnSwitch">Shop</button>
+      <button id="btnWarehouse" class="btnSwitch">Warehouse</button>
+      <div id="bagContent">
+        <div id="bag" class="bag ui-droppable" style="width: 230px;">
+          <button id="btnUseItem" style="left: 260px; top: 51px; display: none;">Use</button>
+          <div class="item equips ui-draggable ui-draggable-handle" id="equip1"><img class="itemImg" src="./equip1.png"><span class="itemNum">1</span></div>
+          <div class="item equips ui-draggable ui-draggable-handle" id="equip2"><img class="itemImg" src="./equip2.png"><span class="itemNum">1</span></div>
+          <div class="item equips ui-draggable ui-draggable-handle" id="equip3"><img class="itemImg" src="./equip3.png"><span class="itemNum">1</span></div>
+          <div class="item equips ui-draggable ui-draggable-handle" id="equip4"><img class="itemImg" src="./equip4.png"><span class="itemNum">1</span></div>
+          <div class="item items ui-draggable ui-draggable-handle" id="item1"><img class="itemImg" src="./item1.png"><span class="itemNum">10</span></div>
+          <div class="item items ui-draggable ui-draggable-handle" id="item2"><img class="itemImg" src="./item2.png"><span class="itemNum">100</span></div>
+          <div class="item items ui-draggable ui-draggable-handle" id="item3"><img class="itemImg" src="./item3.png"><span class="itemNum">12</span></div>
+        </div>
+        <div id="shop" class="bag ui-droppable" style="display: block;">
+          <div class="item items itemShop ui-draggable ui-draggable-handle" id="item4"><img class="itemImg" src="./item4.png"><span class="itemNum">1</span></div>
+          <div class="item items itemShop ui-draggable ui-draggable-handle" id="item5"><img class="itemImg" src="./item5.png"><span class="itemNum">1</span></div>
+          <div class="item items itemShop ui-draggable ui-draggable-handle" id="item6"><img class="itemImg" src="./item6.png"><span class="itemNum">1</span></div>
+          <div class="item equips itemShop ui-draggable ui-draggable-handle" id="equip5"><img class="itemImg" src="./equip5.png"><span class="itemNum">1</span></div>
+        </div>
+        <div id="warehouse" class="bag ui-droppable" style="display: none;">
+          <div class="item equips ui-draggable ui-draggable-handle" id="equip6"><img class="itemImg" src="./equip6.png"><span class="itemNum">1</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="panelBagEquip" class="panel" style="display: none;">
+      <div id="closePanelBagEquip" class="selectIcon"></div>
+      <button id="btnNullEquip" class="btnSwitch">Clear Equip</button>
+      <div id="bagEquipContent"><div id="equip2" class="useEquip"><img class="itemImg" src="./equip2.png"></div><div id="equip4" class="useEquip"><img class="itemImg" src="./equip4.png"></div><div id="equip6" class="useEquip"><img class="itemImg" src="./equip6.png"></div></div>
+    </div>
+    <div id="panelUpgrade" class="panel" style="display: none;">
+      <div id="closePanelUpgrade" class="closePanel selectIcon"></div>
+    </div>
+    <div id="panelSmelting" class="panel" style="display: none;">
+      <div id="closePanelSmelting" class="closePanel selectIcon"></div>
+    </div>
+  </div>
+  <div id="main" style="left: 765px; top: 238px; transform: scaleX(-0.8);">
+    <div id="mainIdle" style="width: 74px; height: 109px; background-position: 0px -331px; display: block;"></div>
+    <div id="mainRun" style="display: none; width: 76px; height: 112px; background-position: 0px 0px;"></div>
+  </div>
+  <div id="clickHere" style="left: 785px; top: 308px; display: none;"></div>
+<script>
+var hokageHouseLeft = 0;
+var anbuHouseLeft = 0;
+var capTLLeft = 0;
+var holeLeft = 0;
+
+function loading() {
+  var elem = document.getElementById("bar");
+  var width = 1;
+  var id = setInterval(frame, 10);
+  function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        $("#loading").hide();
+        $("#container").show();
+        $("#mainIdle").show();
+        hokageHouseLeft = $("#hokageHouse").offset().left;
+        anbuHouseLeft = $("#anbuHouse").offset().left;
+        capTLLeft = $("#capTL").offset().left;
+        holeLeft = $("#hole").offset().left;
+    } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+  }
+}
+$(document).ready(function(){
+  var chat = document.getElementById("chat");
+  var chatValue = document.getElementById("chatValue");
+
+  $("#btnTo").click(function(){
+    $("#txtTo").show();
+  });
+  $("#btnAll, #btnGm").click(function(){
+    $("#txtTo").hide();
+  });
+  $("#btnAll, #btnTo, #btnEnterChat").click(function(){
+    chat.scrollTop = chatValue.scrollHeight;
+  });
+
+  $("#hideEvent").click(function(){
+    document.getElementById("hideEvent").style.transform = "rotate(90deg)";
+    $("#listEvent").toggle("slow", function() {
+      document.getElementById("hideEvent").style.transform = "rotate(0deg)";
+    });
+  });
+
+  $("#btnHideChat").click(function(){
+    $("#chat").hide();
+    $("#chatInput").hide();
+    $("#btnShowChat").show();
+  });
+  $("#btnShowChat").click(function(){
+    $("#btnShowChat").hide();
+    $("#chat").show();
+    $("#chatInput").show();
+  });
+
+  $("#btnHideMission").click(function(){
+    $("#btnHideMission").hide();
+    $("#listMission").hide();
+    $("#btnShowMission").show();
+  });
+  $("#btnShowMission").click(function(){
+    $("#btnShowMission").hide();
+    $("#btnHideMission").show();
+    $("#listMission").show();
+  });
+
+  var main = document.getElementById('main');
+  var mainIdle = document.getElementById('mainIdle');
+  var mainRun = document.getElementById('mainRun');
+  var framesRun = [[0, 0, 76, 112], [78, 0, 76, 110], [154, 0, 76, 104], [0, 112, 72, 100],
+      [72, 110, 78, 100], [154, 104, 72, 104], [68, 210, 72, 98], 
+      [148, 208, 72, 96]];
+  var spriteMainRun = new Sprite(mainRun, framesRun);
+
+  var framesIdle = [[0, 110, 74, 110], [74, 111, 74, 110], [0, 220, 73, 111], [74, 331, 73, 110], [75, 0, 74, 111], [0, 0, 75, 110], [73, 221, 73, 110], [0, 331, 74, 109]];
+  var spriteMainIdle = new Sprite(mainIdle, framesIdle);
+
+  var clickHere = document.getElementById('clickHere');
+  main.style.left = screen.width / 2 +'px';
+  main.style.top = '280px';
+
+  spriteMainIdle.play({fps: 4});
+
+  document.getElementById('mainArea').addEventListener('click', function(ev){
+    $("#mainArea").hide();
+    $("#enter").hide();
+    if (parseInt(main.style.left) > ev.pageX) {
+      main.style.transform = "scaleX(-0.8)";
+    } else {
+      main.style.transform = "scaleX(0.8)";
+    }
+
+    $("#mainIdle").hide();
+    $("#mainRun").show();
+    spriteMainRun.play();
+
+    clickHere.style.left = (ev.pageX-15)+'px';
+    clickHere.style.top = (ev.pageY-20)+'px';
+    $("#clickHere").show();
+    $("#clickHere").hide(1000);
+    main.style.left = (ev.pageX-35)+'px';
+    main.style.top = (ev.pageY-90)+'px';
+
+    setTimeout(function() {
+      if (ev.pageY < 320) {
+        if (ev.pageX > hokageHouseLeft && ev.pageX < hokageHouseLeft + 160) {
+          $("#enter").show();
+        }
+        if (ev.pageX > anbuHouseLeft && ev.pageX < anbuHouseLeft + 96) {
+          $("#enter").show();
+        }
+        if (ev.pageX > capTLLeft && ev.pageX < capTLLeft + 96) {
+          $("#enter").show();
+        }
+        if (ev.pageX > holeLeft && ev.pageX < holeLeft + 105) {
+          // $("#enter").show();
+        }
+      }
+      $("#mainArea").show();
+    }, 1000);
+  },false);
+  document.getElementById('main').addEventListener('transitionend', function(ev) {
+    spriteMainRun.stop();
+    $("#mainRun").hide();
+    $("#mainIdle").show();
+    spriteMainIdle.play({fps: 4, reverse: true, from: 0});
+  }, false );
+
+  $("#enter").click(function(){
+    $(".panel").hide();
+    $("#question").show();
+  });
+
+  $(".event, .menu, #nowEvent, #mainAvatar").click(function(){
+    $(".panel").hide();
+    $("#panel1").show();
+  });
+
+  $(".closePanel").click(function(){
+    $(".panel").hide();
+  });
+
+  $("#app4").click(function(){
+    $(".panel").hide();
+    $("#panelNinja").show();
+  });
+
+  $("#app3").click(function(){
+    $(".panel").hide();
+    $("#btnUseItem").hide();
+    $("#shop").hide();
+    $("#warehouse").hide();
+    $("#bag").css("width","480px");
+    $("#panelBag").show();
+  });
+
+  $("#app2").click(function(){
+    $(".panel").hide();
+    $("#panelUpgrade").show();
+  });
+
+  $("#app1").click(function(){
+    $(".panel").hide();
+    $("#panelSmelting").show();
+  });
+
+  $("#btnTeam").click(function(){
+    $("#ninjaDetail").hide();
+    $("#ninjaDetailInfo").hide();
+    $("#ninjaSummon").hide();
+    $("#ninjaTeam").show();
+  });
+
+  $("#btnNinja").click(function(){
+    $("#ninjaTeam").hide();
+    $("#ninjaSummon").hide();
+    $("#ninjaDetail").show();
+    $("#ninjaDetailInfo").show();
+  });
+
+  $("#btnSummon").click(function(){
+    $("#ninjaTeam").hide();
+    $("#ninjaDetail").hide();
+    $("#ninjaDetailInfo").hide();
+    $("#ninjaSummon").show();
+  });
+
+  var areaNinjaHead = $("#ninjaContent");
+
+  $(".ninjaHead").draggable({
+    containment: areaNinjaHead,
+    scope: 'ninja',
+    helper: 'clone',
+    revert: true,
+    revertDuration: 0
+  });
+
+  $(".teamDrop").droppable({
+    scope: 'ninja',
+    drop: function( event, ui ) {
+      var nameTemp = $(ui.draggable).attr("name");
+      $("."+nameTemp).remove();
+      if ($(this).children(".ninjaHeadTeam").hasClass("main")) {
+        //
+      } else if ($(".ninjaHeadTeam").length > 4 && $(this).children(".ninjaHeadTeam").length == 0) {
+        //
+      } else {
+        $(this).empty();
+        $(ui.draggable).clone().removeClass("ninjaHead").addClass(nameTemp + " ninjaHeadTeam").appendTo(this);
+      }
+    }
+  });
+
+  $(".teamSwap").draggable({
+    containment: areaNinjaHead,
+    scope: 'team',
+    helper: 'clone',
+    start: function () {
+      $(this).css({
+        opacity: 0
+      });
+    },
+
+    stop: function () {
+      $(this).css({
+        opacity: 1  
+      });
+    }
+  });
+
+  $(".teamSwap").droppable({
+    scope: 'team',
+    drop: function (event, ui) {
+        var draggable = ui.draggable;
+        var droppable = $(this);
+        var dragPos = draggable.position();
+        var dropPos = droppable.position();
+        var dragId = draggable.attr('id');
+        var dropId = droppable.attr('id');
+
+        draggable.css({
+          left: dropPos.left + "px",
+          top: dropPos.top + "px"
+        });
+
+        droppable.css({
+          left: dragPos.left + "px",
+          top: dragPos.top + "px"
+        });
+
+        draggable.attr('id', dropId);
+        droppable.attr('id', dragId);
+    }
+  });
+
+  $("#listNinja").droppable({
+    scope: 'team',
+    drop: function (event, ui) {
+      if (!$(ui.draggable).children(".teamDrop").children(".ninjaHeadTeam").hasClass("mainHead")) {
+        $(ui.draggable).children(".teamDrop").empty();
+      }
+    }
+  });
+
+  $(".ninjaSummon").droppable({
+    scope: 'ninja',
+    drop: function( event, ui ) {
+      var nameTemp = $(ui.draggable).attr("name");
+      if (nameTemp == "main") {
+        //
+      } else if ($(this).hasClass("ninjaBox") && $(this).children(".ninjaHead").length > 0) {
+        //
+      } else if ($(this).hasClass("ninjaBox")) {
+        $(ui.draggable).appendTo(this);
+      } else {
+        $(ui.draggable).appendTo(this);
+        $("."+nameTemp).remove();
+        $("#ninjaName").html("user");
+        $("#ninjaDetailMidMid").css("background-image","url(img/mainBody.png)");
+      }
+    }
+  });
+
+  $(".ninjaHead").mousedown(function(){
+    if ($("#ninjaDetail").is(":visible")) {
+      var nameTemp = $(this).attr("name");
+      $("#ninjaName").html(nameTemp);
+      $("#ninjaDetailMidMid").css("background-image","url(img/" + nameTemp + "Body.png)");
+    }
+  });
+
+  $("#btnShop").click(function(){
+    $("#btnUseItem").hide();
+    $("#bag").css("width","230px");
+    $("#warehouse").hide();
+    $("#shop").show();
+  });
+
+  $("#btnWarehouse").click(function(){
+    $("#btnUseItem").hide();
+    $("#bag").css("width","230px");
+    $("#shop").hide();
+    $("#warehouse").show();
+  });
+
+  var equipBoxIdTemp = "";
+  var equipIdTemp = "";
+
+  var useEquip = $(".equips").not(".itemShop").clone();
+  useEquip.find("span").remove();
+  useEquip.removeAttr("class");
+  useEquip.addClass("useEquip");
+  $("#bagEquipContent").html(useEquip);
+
+  $(".item").draggable({
+    scope: 'item',
+    containment: $("#bagContent"),
+    helper: 'clone',
+    revert: true,
+    revertDuration: 0,
+    scroll: false,
+    drag: function(event, ui) {
+      $("#btnUseItem").hide();
+    }
+  });
+
+  $(".bag").droppable({
+    scope: 'item',
+    drop: function( event, ui ) {
+      if ($(this).attr("id") == "shop") {
+        $(ui.draggable).addClass("itemShop");
+      } else {
+        $(ui.draggable).removeClass("itemShop");
+      }
+      $(ui.draggable).appendTo(this);
+    }
+  })
+
+  $(".items").mousedown(function(){
+    if ($(this).hasClass("itemShop")) {
+      //
+    } else {
+      var pos = $(this).position();
+      $("#btnUseItem").css({
+        left: pos.left + "px",
+        top: pos.top + "px"
+      });
+      $("#btnUseItem").show();
+    }
+  });
+
+  $("#btnUseItem").click(function(){
+    $("#btnUseItem").hide();
+  });
+
+  $(".equipBox").click(function(){
+    equipBoxIdTemp = $(this).attr("id");
+    if ($(this).children(".usedEquip").length > 0) {
+      equipIdTemp = $(this).children(".usedEquip").attr("id");
+    } else {
+      equipIdTemp = "";
+    }
+    $("#panelBagEquip").show();
+  });
+
+  $("#closePanelBagEquip").click(function(){
+    $("#panelBagEquip").hide();
+  });
+
+  $("#btnNullEquip").click(function(){
+    if (equipIdTemp == "") {
+      //
+    } else {
+      $("#"+equipIdTemp).addClass("useEquip").removeClass("usedEquip");
+      $("#bagEquipContent").append($("#"+equipIdTemp));
+    }
+    $("#panelBagEquip").hide();
+  });
+
+  $(".useEquip").click(function(){
+    if (equipIdTemp == "") {
+      //
+    } else {
+      $("#"+equipIdTemp).addClass("useEquip").removeClass("usedEquip");
+      $("#bagEquipContent").append($("#"+equipIdTemp));
+    }
+    $(this).removeClass("useEquip").addClass("usedEquip");
+    $("#"+equipBoxIdTemp).append($(this));
+    $("#panelBagEquip").hide();
+  });
+
+});
+</script>
+
+</body></html>
